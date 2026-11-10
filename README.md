@@ -1,3 +1,13 @@
+---
+title: HealthQuery AI Medical RAG Chatbot
+emoji: 🩺
+colorFrom: blue
+colorTo: green
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # 🏥 Medical RAG Chatbot
 
 An advanced **Retrieval-Augmented Generation (RAG)** chatbot for medical question answering, powered by a multi-stage retrieval pipeline, Groq's LLaMA 3.3 70B, and Pinecone vector search.

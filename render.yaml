@@ -18,3 +18,4 @@ services:
         sync: false
       - key: HF_TOKEN
         sync: false
+

@@ -1,29 +1,37 @@
-# Use the official Python slim image
+# Use official Python slim image
 FROM python:3.10-slim
 
-# Set the working directory
-WORKDIR /app
-
-# Install system dependencies (needed for psycopg, etc.)
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     gcc \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements first to leverage Docker cache
-COPY requirements.txt .
+# Set up user with UID 1000 for Hugging Face Spaces compatibility
+RUN useradd -m -u 1000 user
+ENV HOME=/home/user \
+    PATH=/home/user/.local/bin:$PATH
 
-# Install PyTorch CPU specifically to drastically reduce image size and prevent torchaudio ABI conflicts
+WORKDIR $HOME/app
+
+# Copy requirements first
+COPY --chown=user requirements.txt .
+
+# Install PyTorch CPU first to keep image lightweight
 RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
 
-# Install Python dependencies
+# Install remaining dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application code
-COPY . .
+# Copy the rest of the application
+COPY --chown=user . $HOME/app
 
-# Expose the port the app runs on
-EXPOSE 8000
+# Switch to non-root user
+USER user
 
-# Command to run the application using uvicorn (dynamic PORT for Render)
-CMD uvicorn app:app --host 0.0.0.0 --port ${PORT:-8000}
+# Expose port 7860 for Hugging Face Spaces (and fallback)
+EXPOSE 7860
+
+# Launch uvicorn listening on ${PORT} or default 7860
+CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port ${PORT:-7860}"]
