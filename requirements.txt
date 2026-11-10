@@ -25,7 +25,6 @@ uvicorn
 jinja2
 python-multipart
 slowapi
-gradio
 
 # Database
 psycopg

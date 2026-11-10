@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Set up user with UID 1000 for Hugging Face Spaces compatibility
+# Set up non-root user with UID 1000 for Hugging Face Spaces compatibility
 RUN useradd -m -u 1000 user
 ENV HOME=/home/user \
     PATH=/home/user/.local/bin:$PATH
@@ -30,8 +30,8 @@ COPY --chown=user . $HOME/app
 # Switch to non-root user
 USER user
 
-# Expose port 7860 for Hugging Face Spaces (and fallback)
+# Expose port 7860 for Hugging Face Spaces
 EXPOSE 7860
 
-# Launch uvicorn listening on ${PORT} or default 7860
-CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port ${PORT:-7860}"]
+# Launch uvicorn directly on 0.0.0.0:7860
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "7860"]

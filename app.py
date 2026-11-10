@@ -3,7 +3,6 @@ from fastapi.responses import HTMLResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
-import gradio as gr
 import uvicorn
 import os
 import json
@@ -83,12 +82,6 @@ async def chat_stream(request: Request, message: str = Form(...), session_id: st
         }
     )
 
-# Mount Gradio Blocks on /gradio so Hugging Face detects Gradio SDK cleanly
-with gr.Blocks(title="HealthQuery AI Medical RAG") as demo:
-    gr.Markdown("# 🩺 HealthQuery AI Medical RAG Chatbot\nVisit the [Interactive Chat Interface](/) for the full experience.")
-
-app = gr.mount_gradio_app(app, demo, path="/gradio")
-
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 7860))
+    port = int(os.environ.get("PORT", 8000))
     uvicorn.run(app, host="0.0.0.0", port=port)
