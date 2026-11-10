@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
+import gradio as gr
 import uvicorn
 import os
 import json
@@ -14,14 +15,14 @@ from slowapi.errors import RateLimitExceeded
 # Import the RAG logic from src
 from src.chain_utils import run_elite_pipeline, stream_elite_pipeline
 
-app = FastAPI(title="Medical RAG Chatbot")
+app = FastAPI(title="HealthQuery AI Medical RAG Chatbot")
 
-# Rate Limiter (Layer 2): Limit requests per IP to protect Free Tier quotas
+# Rate Limiter: Limit requests per IP to protect Free Tier quotas
 limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# Allow CORS for Vercel frontend
+# Allow CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -82,6 +83,12 @@ async def chat_stream(request: Request, message: str = Form(...), session_id: st
         }
     )
 
+# Mount Gradio Blocks on /gradio so Hugging Face detects Gradio SDK cleanly
+with gr.Blocks(title="HealthQuery AI Medical RAG") as demo:
+    gr.Markdown("# 🩺 HealthQuery AI Medical RAG Chatbot\nVisit the [Interactive Chat Interface](/) for the full experience.")
+
+app = gr.mount_gradio_app(app, demo, path="/gradio")
+
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))
+    port = int(os.environ.get("PORT", 7860))
     uvicorn.run("app:app", host="0.0.0.0", port=port, reload=True)

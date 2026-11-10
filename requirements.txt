@@ -19,12 +19,13 @@ pypdf
 # BM25
 rank-bm25
 
-# Web Framework (if building API)
+# Web Framework & Interface
 fastapi
 uvicorn
 jinja2
 python-multipart
 slowapi
+gradio
 
 # Database
 psycopg
