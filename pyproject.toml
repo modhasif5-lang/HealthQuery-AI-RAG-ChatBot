@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "medical-rag-chatbot"
+version = "0.1.0"
+description = "Medical RAG Chatbot using RAG Fusion, Hybrid Retrieval and Cross-Encoder Reranking"
+requires-python = ">=3.9"
+dependencies = [
+    "langchain",
+    "langchain-community",
+    "langchain-core",
+    "langchain-pinecone",
+    "langchain-groq",
+    "pinecone-client",
+    "sentence-transformers",
+    "torch",
+    "pypdf",
+    "rank-bm25",
+    "fastapi",
+    "uvicorn",
+    "jinja2",
+    "python-multipart",
+    "psycopg",
+    "python-dotenv",
+    "huggingface-hub",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]

@@ -1,0 +1,12 @@
+.git
+.gitignore
+__pycache__/
+*.pyc
+.env
+.vscode/
+data/
+research/
+medical_rag_chatbot.egg-info/
+venv/
+.venv/
+env/

@@ -1,0 +1,15 @@
+# Ignore Python backend & heavy dependencies on Vercel
+# Vercel only hosts static HTML/CSS/JS frontend; backend runs on Render
+app.py
+src/
+requirements.txt
+Dockerfile
+pyproject.toml
+setup.py
+research/
+data/
+.venv/
+medical_rag_interview_handbook.md
+medical_rag_interview_questions_answers.md
+medical_rag_mock_interview_prompt.md
+interview_prep.md

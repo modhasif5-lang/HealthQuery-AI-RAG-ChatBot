@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Medical RAG Assistant</title>
+    <link rel="stylesheet" href="/static/style.css?v=5.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo">
+                    <i data-feather="activity"></i>
+                </div>
+                <h1>MedRAG<span>Elite</span></h1>
+            </div>
+            
+            <nav class="nav-menu">
+                <button class="nav-item active" id="nav-consultation">
+                    <i data-feather="message-square"></i>
+                    <span>Consultation</span>
+                </button>
+                <button class="nav-item" id="nav-knowledge">
+                    <i data-feather="book-open"></i>
+                    <span>Knowledge Base</span>
+                </button>
+                <button class="nav-item" id="nav-settings">
+                    <i data-feather="settings"></i>
+                    <span>Settings</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="security-badge">
+                    <i data-feather="shield"></i>
+                    <span>Secure Medical Assistant</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Consultation Section -->
+            <section id="section-consultation" class="content-section active">
+                <!-- Discord-style centered chat window -->
+                <div class="chat-window">
+                    <header class="chat-header-discord">
+                        <div class="discord-avatar-container">
+                            <img src="/static/images/bot-avatar.svg" alt="Bot Avatar" class="discord-avatar">
+                            <div class="status-dot online"></div>
+                        </div>
+                        <div class="header-info-discord">
+                            <h2>Medical Chatbot</h2>
+                            <p>Ask me anything!</p>
+                        </div>
+                    </header>
+
+                    <div class="messages-container" id="chat-messages">
+                        <!-- Welcome Message -->
+                        <div class="message ai-message">
+                            <img src="/static/images/bot-avatar.svg" alt="AI Avatar" class="message-avatar">
+                            <div class="message-content-wrapper">
+                                <div class="message-content">
+                                    <p>Hello! How can I assist you today?</p>
+                                    <div class="timestamp">Just now</div>
+                                </div>
+                                <div class="message-actions">
+                                    <i data-feather="copy" class="action-icon" title="Copy text"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <footer class="input-area">
+                        <form id="chat-form" class="input-wrapper">
+                            <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off" required>
+                            <button type="submit" class="send-btn" id="submit-btn" title="Send Message">
+                                <i data-feather="send"></i>
+                            </button>
+                        </form>
+                    </footer>
+                </div>
+            </section>
+
+            <!-- Knowledge Base Section -->
+            <section id="section-knowledge" class="content-section">
+                <header class="section-header">
+                    <h2>Knowledge Base</h2>
+                    <p>Verified Medical Textbooks & Index Statistics</p>
+                </header>
+                <div class="section-body">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <label>Vectors Stored</label>
+                            <span id="stat-vectors">Loading...</span>
+                        </div>
+                        <div class="stat-card">
+                            <label>Index Name</label>
+                            <span>medical-index</span>
+                        </div>
+                    </div>
+                    
+                    <h3>Verified Sources</h3>
+                    <ul class="source-list">
+                        <li>
+                            <i data-feather="book"></i>
+                            <div>
+                                <strong>PJ Mehta Practical Medicine</strong>
+                                <p>Extensive clinical and practical medical knowledge.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i data-feather="book"></i>
+                            <div>
+                                <strong>API Textbook of Medicine</strong>
+                                <p>Comprehensive reference for medical practitioners.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i data-feather="book"></i>
+                            <div>
+                                <strong>Bailey & Love's Surgery</strong>
+                                <p>The world-renowned guide to surgical practice.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i data-feather="book"></i>
+                            <div>
+                                <strong>Davidson's Principles of Medicine</strong>
+                                <p>Foundational principles for evidence-based practice.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="section-settings" class="content-section">
+                <header class="section-header">
+                    <h2>Settings</h2>
+                    <p>System Configuration & Session Management</p>
+                </header>
+                <div class="section-body">
+                    <div class="settings-group">
+                        <h3>Session Information</h3>
+                        <div class="setting-item">
+                            <div>
+                                <label>Active Session ID</label>
+                                <code id="display-session-id">unknown</code>
+                            </div>
+                            <button id="refresh-session-btn" class="secondary-btn">New Identity</button>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <h3>Database Persistence</h3>
+                        <div class="setting-item">
+                            <div>
+                                <label>PostgreSQL Status</label>
+                                <span class="status-indicator">Online</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/static/script.js?v=5.0"></script>
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>
